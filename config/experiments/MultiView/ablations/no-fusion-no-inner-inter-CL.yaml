@@ -1,0 +1,5 @@
+MODEL:
+  use_inner_CL: 0
+  use_inter_CL: 0
+  use_fusion: 0
+  

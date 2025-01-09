@@ -1,0 +1,6 @@
+DATASET:
+  name: 'ASV2019_LA'
+  task: 'inner_eval'
+  
+MODEL:
+  method_classes: 20

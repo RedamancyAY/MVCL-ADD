@@ -1,0 +1,2 @@
+MODEL:
+  use_mse_loss: 1

@@ -1,0 +1,7 @@
+DATASET:
+  name: 'MLAAD'
+  task: 'DECRO'
+  
+
+MODEL:
+  method_classes: 32

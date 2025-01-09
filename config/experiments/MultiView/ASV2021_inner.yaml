@@ -1,0 +1,6 @@
+DATASET:
+  name: 'ASV2021'
+  task: 'inner_eval'
+  
+MODEL:
+  method_classes: 5

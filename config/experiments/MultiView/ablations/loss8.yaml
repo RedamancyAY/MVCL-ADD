@@ -1,0 +1,3 @@
+MODEL:
+  w_con: 0.1
+  w_cls: 1.0

@@ -1,0 +1,4 @@
+DATASET:
+  batch_size: 64
+  test_batch_size: 64
+    
