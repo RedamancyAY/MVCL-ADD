@@ -1,7 +1,0 @@
-DATASET:
-  name: 'MLAAD'
-  task: 'de_es_ru'
-  
-
-MODEL:
-  method_classes: 32
