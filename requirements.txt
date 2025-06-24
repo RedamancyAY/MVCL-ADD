@@ -1,0 +1,13 @@
+einops==0.8.1
+hide_warnings==0.17
+librosa==0.11.0
+matplotlib==3.9.4
+pandas==2.3.0
+pytorch-lightning==2.5.2
+torch==2.7.1
+torchaudio==2.7.1
+torchmetrics==1.7.3
+torchvision==0.22.1
+transformers==4.52.4
+wavel==0.0.2
+rich=14.0.0

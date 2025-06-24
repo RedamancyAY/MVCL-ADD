@@ -1,0 +1,8 @@
+**.ckpt
+**.pyc
+**.ipynb_checkpoint
+**.DS_Store
+.vscode/
+__pycache__/
+data/
+config/

@@ -10,30 +10,46 @@ pl.seed_everything(42)
 torch.set_float32_matmul_precision("medium")
 torch.backends.cudnn.benchmark = True
 
-from myutils.tools import color_print, to_list
 
 from config import get_cfg_defaults
 from data.make_dataset import make_data
 from models import make_model
-from utils import (
-    clear_folder,
+from tools import (
     build_logger,
     get_ckpt_path,
-    make_callbacks,
     write_model_summary,
 )
 
-ROOT_DIR = "/home/ay/data/DATA/1-model_save/00-Deepfake/1-df-audio"
+from callbacks import make_callbacks
+
+ROOT_DIR = "./logs"
+
+
+def to_list(x):
+    """
+    if the input is not a list, return [input]
+    """
+    if isinstance(x, list):
+        return x
+    else:
+        return [x]
+
+
+def color_print(*args):
+    """
+    print string with colorful background
+    """
+    from rich.console import Console
+    string = ' '.join([str(x) for x in args])
+    Console().print(f"[on #00ff00][#ff3300]{string}[/#ff3300][/on #00ff00]")
+
+
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--cfg", type=str, default="GMM")
-    parser.add_argument("--dims", type=str, default="[32, 64, 64, 128]")
-    parser.add_argument("--nblocks", type=str, default="[1,1,3,1]")
     parser.add_argument("--ablation", type=str, default=None)
-
-
-    # parser.add_argument("--specaug", type=str, default='ss')
     parser.add_argument("--gpu", type=int, nargs="+", default=0)
     parser.add_argument("--batch_size", type=int, default=-1)
     parser.add_argument("--grad", type=int, default=1)
@@ -44,13 +60,9 @@ if __name__ == "__main__":
     parser.add_argument("--use_lr_find", type=int, default=0)
     parser.add_argument("-v", "--version", type=int, default=None)
     parser.add_argument("-t", "--test", type=int, default=0)
-    parser.add_argument("-l", "--log", type=int, default=0)
     parser.add_argument("--resume", type=int, default=0)
     parser.add_argument("--theme", type=str, default="best")
-    parser.add_argument("--collect", type=int, default=0)
-    parser.add_argument("--clear_log", type=int, default=0)
     parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--test_as_val", type=int, default=999)
     parser.add_argument("--test_noise", type=int, default=0)
     parser.add_argument("--test_noise_level", type=int, default=30)
     parser.add_argument("--test_noise_type", type=str, default="bg")
@@ -97,8 +109,6 @@ if __name__ == "__main__":
     color_print(f"logger path : {trainer.logger.log_dir}")
     log_dir = trainer.logger.log_dir
 
-    if args.test == 0 and args.clear_log:
-        clear_folder(log_dir)
 
     if not args.test:
         ckpt_path = get_ckpt_path(log_dir, theme="last") if args.resume else None
@@ -114,7 +124,6 @@ if __name__ == "__main__":
 
     else:
         ckpt_path = get_ckpt_path(log_dir, theme=args.theme)
-        trainer.trainset_wo_transform = dl.train_wo_transform
 
         if not args.collect:
             for test_dl in to_list(dl.test):
